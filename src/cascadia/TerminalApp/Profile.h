@@ -25,7 +25,9 @@ class TerminalApp::Profile final
 {
 
 public:
+    Profile(const winrt::guid& guid);
     Profile();
+
     ~Profile();
 
     winrt::Microsoft::Terminal::Settings::TerminalSettings CreateTerminalSettings(const std::vector<::TerminalApp::ColorScheme>& schemes) const;
@@ -40,6 +42,7 @@ public:
     void SetColorScheme(std::optional<std::wstring> schemeName) noexcept;
     void SetAcrylicOpacity(double opacity) noexcept;
     void SetCommandline(std::wstring cmdline) noexcept;
+    void SetStartingDirectory(std::wstring startingDirectory) noexcept;
     void SetName(std::wstring name) noexcept;
     void SetUseAcrylic(bool useAcrylic) noexcept;
     void SetDefaultForeground(COLORREF defaultForeground) noexcept;
@@ -47,6 +50,7 @@ public:
 
     bool HasIcon() const noexcept;
     std::wstring_view GetIconPath() const noexcept;
+    void SetIconPath(std::wstring_view path) noexcept;
 
     bool GetCloseOnExit() const noexcept;
 
@@ -56,7 +60,7 @@ private:
 
     static winrt::Microsoft::Terminal::Settings::ScrollbarState ParseScrollbarState(const std::wstring& scrollbarState);
     static winrt::Microsoft::Terminal::Settings::CursorStyle _ParseCursorShape(const std::wstring& cursorShapeString);
-    static std::wstring _SerializeCursorStyle(const winrt::Microsoft::Terminal::Settings::CursorStyle cursorShape);
+    static std::wstring_view _SerializeCursorStyle(const winrt::Microsoft::Terminal::Settings::CursorStyle cursorShape);
 
     GUID _guid;
     std::wstring _name;
